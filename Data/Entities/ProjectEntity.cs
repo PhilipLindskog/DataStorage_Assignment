@@ -7,9 +7,14 @@ public class ProjectEntity
 {
     [Key]
     public int Id { get; set; }
+
+    [Required]
+    [Column(TypeName = "NVARCHAR(150)")]
     public string Title { get; set; } = null!;
+
     public string? Description { get; set; }
 
+    [Required]
     [Column(TypeName = "date")]
     public DateTime StartDate { get; set; }
 
