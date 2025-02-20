@@ -1,22 +1,21 @@
 ﻿using Business.Dtos;
 using Business.Factories;
-using Business.Interfaces;
 using Business.Models;
 using Data.Entities;
 using Data.Repositories;
 using System.Diagnostics;
 using System.Linq.Expressions;
 
-namespace Business.Services;
+namespace Business.Interfaces;
 
-public class CustomerService(CustomerRepository customerRepository)
+public class CustomerService(CustomerRepository customerRepository) : ICustomerService
 {
     private readonly CustomerRepository _customerRepository = customerRepository;
 
     public async Task<IResult> CreateCustomerAsync(CustomerRegistrationForm registrationForm)
     {
         if (registrationForm == null)
-            return Result.BadRequest("Invalid customer registration");
+            return Result.BadRequest("Invalid customer registration.");
 
         await _customerRepository.BeginTransactionAsync();
 
@@ -24,7 +23,7 @@ public class CustomerService(CustomerRepository customerRepository)
         {
             var customerEntity = CustomerFactory.Create(registrationForm);
 
-            if(await _customerRepository.AlreadyExistsAsync(x => x.CustomerName == registrationForm.CustomerName))
+            if (await _customerRepository.AlreadyExistsAsync(x => x.CustomerName == registrationForm.CustomerName))
             {
                 await _customerRepository.RollbackTransactionAsync();
                 return Result.AlreadyExists("A Customer with this name already exists");
@@ -67,7 +66,7 @@ public class CustomerService(CustomerRepository customerRepository)
         var customerEntity = await _customerRepository.GetAsync(expression);
 
         if (customerEntity == null)
-            return Result.NotFound("Customer not found");
+            return Result.NotFound("Customer not found.");
 
         var customer = CustomerFactory.Create(customerEntity);
         return Result<Customer>.Ok(customer);
@@ -117,7 +116,7 @@ public class CustomerService(CustomerRepository customerRepository)
         try
         {
             var result = await _customerRepository.DeleteAsync(x => x.Id == id);
-            return result ? Result.Ok() : Result.Error("Unable to delete Customer");
+            return result ? Result.Ok() : Result.Error("Unable to delete customer.");
         }
         catch (Exception ex)
         {
