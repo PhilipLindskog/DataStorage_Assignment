@@ -9,7 +9,7 @@ using System.Linq.Expressions;
 
 namespace Business.Services;
 
-public class ProjectService(ProjectRepository projectRepository)
+public class ProjectService(ProjectRepository projectRepository) : IProjectService
 {
     private readonly ProjectRepository _projectRepository = projectRepository;
 
@@ -64,7 +64,7 @@ public class ProjectService(ProjectRepository projectRepository)
 
     public async Task<IResult> GetProjectsAsync(Expression<Func<ProjectEntity, bool>> expression)
     {
-        var projectEntity= await _projectRepository.GetAsync(expression);
+        var projectEntity = await _projectRepository.GetAsync(expression);
 
         if (projectEntity == null)
             return Result.NotFound("Project not found.");
@@ -73,22 +73,24 @@ public class ProjectService(ProjectRepository projectRepository)
         return Result<Project>.Ok(project);
     }
 
-    public async Task<IResult> UpdateProjectAsync(Expression<Func<ProjectEntity, bool>> expression)
+    public async Task<IResult> UpdateProjectAsync(int id, ProjectUpdateForm updateForm)
     {
         await _projectRepository.BeginTransactionAsync();
 
         try
         {
-            var oldProjectEntity = await _projectRepository.GetAsync(expression);
-            if(oldProjectEntity == null)
+            var existingEntity = await _projectRepository.GetAsync(x => x.Id == id);
+            if (existingEntity == null)
             {
                 await _projectRepository.RollbackTransactionAsync();
                 return Result.NotFound("Project not found.");
             }
 
-            var projectEntity = ProjectFactory.Create(oldProjectEntity);
+            var updatedEntity = ProjectFactory.Update(existingEntity, updateForm);
 
-            if (projectEntity != null)
+            var result = await _projectRepository.UpdateAsync(x => x.Id == id, updatedEntity);
+
+            if (result)
             {
                 await _projectRepository.CommitTransactionAsync();
                 return Result.Ok();

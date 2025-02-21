@@ -10,6 +10,6 @@ namespace Business.Interfaces
         Task<IResult> DeleteStatusTypeAsync(int id);
         Task<IResult> GetAllStatusTypesAsync();
         Task<IResult> GetStatusTypeAsync(Expression<Func<StatusTypeEntity, bool>> expression);
-        Task<IResult> UpdateStatusTypeAsync(Expression<Func<StatusTypeEntity, bool>> expression);
+        Task<IResult> UpdateStatusTypeAsync(int id, StatusTypeUpdateForm updateForm);
     }
 }

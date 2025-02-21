@@ -31,11 +31,13 @@ public static class UserFactory
         Email = user.Email
     };
 
-    public static UserEntity Create(UserUpdateForm form) => new()
+    public static UserEntity Update(UserEntity entity, UserUpdateForm form)
     {
-        Id = form.Id,
-        FirstName = form.FirstName,
-        LastName = form.LastName,
-        Email = form.Email
-    };
+        entity.Id = form.Id;
+        entity.FirstName = form.FirstName;
+        entity.LastName = form.LastName;
+        entity.Email = form.Email;
+
+        return entity;
+    }
 }

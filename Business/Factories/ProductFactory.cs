@@ -28,10 +28,12 @@ public static class ProductFactory
         Price = product.Price
     };
 
-    public static ProductEntity Create(ProductUpdateForm form) => new()
+    public static ProductEntity Update(ProductEntity entity, ProductUpdateForm form)
     {
-        Id = form.Id,
-        ProductName = form.ProductName,
-        Price = form.Price
-    };
+        entity.Id = form.Id;
+        entity.ProductName = form.ProductName;
+        entity.Price = form.Price;
+
+        return entity;
+    }
 }

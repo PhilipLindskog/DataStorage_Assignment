@@ -10,6 +10,6 @@ namespace Business.Interfaces
         Task<IResult> DeleteCustomerAsync(int id);
         Task<IResult> GetAllCustomersAsync();
         Task<IResult> GetCustomerAsync(Expression<Func<CustomerEntity, bool>> expression);
-        Task<IResult> UpdateCustomerAsync(Expression<Func<CustomerEntity, bool>> expression);
+        Task<IResult> UpdateCustomerAsync(int id, CustomerUpdateForm updateForm);
     }
 }

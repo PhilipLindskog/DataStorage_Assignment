@@ -52,7 +52,7 @@ public class ProductService(ProductRepository productRepository) : IProductServi
         }
     }
 
-    public async Task<IResult> GetAllCustomersAsync()
+    public async Task<IResult> GetAllProductsAsync()
     {
         var productEntities = await _productRepository.GetAllAsync();
 
@@ -74,22 +74,24 @@ public class ProductService(ProductRepository productRepository) : IProductServi
         return Result<Product>.Ok(product);
     }
 
-    public async Task<IResult> UpdateProductAsync(Expression<Func<ProductEntity, bool>> expression)
+    public async Task<IResult> UpdateProductAsync(int id, ProductUpdateForm updateForm)
     {
         await _productRepository.BeginTransactionAsync();
 
         try
         {
-            var oldProductEntity = await _productRepository.GetAsync(expression);
-            if (oldProductEntity == null)
+            var existingEntity = await _productRepository.GetAsync(x => x.Id == id);
+            if (existingEntity == null)
             {
                 await _productRepository.RollbackTransactionAsync();
                 return Result.NotFound("Product not found.");
             }
 
-            var productEntity = ProductFactory.Create(oldProductEntity);
+            var updatedEntity = ProductFactory.Update(existingEntity, updateForm);
 
-            if (productEntity != null)
+            var result = await _productRepository.UpdateAsync(x => x.Id == id, updatedEntity);
+
+            if (result)
             {
                 await _productRepository.CommitTransactionAsync();
                 return Result.Ok();

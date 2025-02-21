@@ -73,22 +73,24 @@ public class StatusTypeService(StatusTypeRepository statusTypeRepository) : ISta
         return Result<StatusType>.Ok(statusType);
     }
 
-    public async Task<IResult> UpdateStatusTypeAsync(Expression<Func<StatusTypeEntity, bool>> expression)
+    public async Task<IResult> UpdateStatusTypeAsync(int id, StatusTypeUpdateForm updateForm)
     {
         await _statusTypeRepository.BeginTransactionAsync();
 
         try
         {
-            var oldStatusEntity = await _statusTypeRepository.GetAsync(expression);
-            if (oldStatusEntity == null)
+            var existingEntity = await _statusTypeRepository.GetAsync(x => x.Id == id);
+            if (existingEntity == null)
             {
                 await _statusTypeRepository.RollbackTransactionAsync();
                 return Result.NotFound("Status not found.");
             }
 
-            var statusEntity = StatusTypeFactory.Create(oldStatusEntity);
+            var updatedEntity = StatusTypeFactory.Update(existingEntity, updateForm);
 
-            if (statusEntity != null)
+            var result = await _statusTypeRepository.UpdateAsync(x => x.Id == id, updatedEntity);
+
+            if (result)
             {
                 await _statusTypeRepository.CommitTransactionAsync();
                 return Result.Ok();
@@ -116,8 +118,8 @@ public class StatusTypeService(StatusTypeRepository statusTypeRepository) : ISta
 
         try
         {
-            var result = _statusTypeRepository.DeleteAsync(x => x.Id == id);
-            return result ? Result.Ok : Result.Error("Unable to delete status.")
+            var result = await _statusTypeRepository.DeleteAsync(x => x.Id == id);
+            return result ? Result.Ok() : Result.Error("Unable to delete Status");
         }
         catch (Exception ex)
         {

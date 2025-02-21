@@ -8,8 +8,8 @@ namespace Business.Interfaces
     {
         Task<IResult> CreateProductAsync(ProductRegistrationForm productform);
         Task<IResult> DeleteProductAsync(int id);
-        Task<IResult> GetAllCustomersAsync();
+        Task<IResult> GetAllProductsAsync();
         Task<IResult> GetProductAsync(Expression<Func<ProductEntity, bool>> expression);
-        Task<IResult> UpdateProductAsync(Expression<Func<ProductEntity, bool>> expression);
+        Task<IResult> UpdateProductAsync(int id, ProductUpdateForm updateForm);
     }
 }

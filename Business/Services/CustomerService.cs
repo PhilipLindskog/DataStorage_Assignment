@@ -72,22 +72,24 @@ public class CustomerService(CustomerRepository customerRepository) : ICustomerS
         return Result<Customer>.Ok(customer);
     }
 
-    public async Task<IResult> UpdateCustomerAsync(Expression<Func<CustomerEntity, bool>> expression)
+    public async Task<IResult> UpdateCustomerAsync(int id, CustomerUpdateForm updateForm)
     {
         await _customerRepository.BeginTransactionAsync();
 
         try
         {
-            var oldCustomerEntity = await _customerRepository.GetAsync(expression);
-            if (oldCustomerEntity == null)
+            var existingEntity = await _customerRepository.GetAsync(x => x.Id == id);
+            if (existingEntity == null)
             {
                 await _customerRepository.RollbackTransactionAsync();
                 return Result.NotFound("Customer not found.");
             }
 
-            var customerEntity = CustomerFactory.Create(oldCustomerEntity);
+            var updatedEntity = CustomerFactory.Update(existingEntity, updateForm);
 
-            if (customerEntity != null)
+            var result = await _customerRepository.UpdateAsync(x => x.Id == id, updatedEntity);
+
+            if (result)
             {
                 await _customerRepository.CommitTransactionAsync();
                 return Result.Ok();

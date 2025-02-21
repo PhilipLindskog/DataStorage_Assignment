@@ -9,6 +9,6 @@ namespace Data.Interfaces
         Task<bool> AlreadyExistsAsync(Expression<Func<TEntity, bool>> expression);
         Task<IEnumerable<TEntity>> GetAllAsync();
         Task<TEntity> GetAsync(Expression<Func<TEntity, bool>> expression);
-        Task<TEntity> UpdateAsync(Expression<Func<TEntity, bool>> expression, TEntity updatedEntity);
+        Task<bool> UpdateAsync(Expression<Func<TEntity, bool>> expression, TEntity updatedEntity);
     }
 }

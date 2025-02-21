@@ -73,22 +73,24 @@ public class UserService(UserRepository userRepository) : IUserService
         return Result<User>.Ok(user);
     }
 
-    public async Task<IResult> UpdateUserAsync(Expression<Func<UserEntity, bool>> expression)
+    public async Task<IResult> UpdateUserAsync(int id, UserUpdateForm updateForm)
     {
         await _userRepository.BeginTransactionAsync();
 
         try
         {
-            var oldUserEntity = await _userRepository.GetAsync(expression);
-            if (oldUserEntity == null)
+            var existingEntity = await _userRepository.GetAsync(x => x.Id == id);
+            if (existingEntity == null)
             {
                 await _userRepository.RollbackTransactionAsync();
                 return Result.NotFound("User not found");
             }
 
-            var userEntity = UserFactory.Create(oldUserEntity);
+            var updatedEntity = UserFactory.Update(existingEntity, updateForm);
 
-            if (userEntity != null)
+            var result = await _userRepository.UpdateAsync(x => x.Id == id, updatedEntity);
+
+            if (result)
             {
                 await _userRepository.CommitTransactionAsync();
                 return Result.Ok();
