@@ -152,7 +152,7 @@ public class CustomerDialogs(ICustomerService customerService) : ICustomerDialog
             return;
         }
 
-        Console.WriteLine("Enter new Customer name: ");
+        Console.Write("Enter new Customer name: ");
         var newCustomerName = Console.ReadLine();
 
         if (string.IsNullOrEmpty(newCustomerName))
@@ -187,7 +187,7 @@ public class CustomerDialogs(ICustomerService customerService) : ICustomerDialog
         Console.Clear();
         Console.WriteLine("----------- DELETE CUSTOMER BY ID ----------");
 
-        Console.WriteLine("Enter Customer ID: ");
+        Console.Write("Enter Customer ID: ");
 
         var id = int.Parse(Console.ReadLine()!);
 

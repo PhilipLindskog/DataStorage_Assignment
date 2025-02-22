@@ -14,7 +14,7 @@ public class MainDialog(IStatusDialog statusDialog, IProjectDialogs projectDialo
             Console.Clear();
             Console.WriteLine("---------- MAIN MENU ----------");
             Console.WriteLine("1: Manage Projects");
-            Console.WriteLine("2: Manage Cusomers");
+            Console.WriteLine("2: Manage Customers");
             Console.WriteLine("3: Manage Services");
             Console.WriteLine("4: Manage Users");
             Console.WriteLine("5: Manage StatusTypes");
@@ -48,10 +48,9 @@ public class MainDialog(IStatusDialog statusDialog, IProjectDialogs projectDialo
                     break;
 
                 case "q":
-                    //var answer = QuitApplication();
-                    //if (answer == true)
-                    //    isRunning = false;
-                    Environment.Exit(0);
+                    var answer = QuitApplication();
+                    if (answer == true)
+                        isRunning = false;
                     break;
 
                 default:
@@ -63,19 +62,19 @@ public class MainDialog(IStatusDialog statusDialog, IProjectDialogs projectDialo
         while (isRunning);
     }
 
-    //    public bool QuitApplication()
-    //    {
-    //        Console.Clear();
-    //        Console.WriteLine("------------ QUIT APPLICATION ----------");
-    //        Console.WriteLine("Do you wish to quit the application?");
-    //        Console.Write("Press Y/N: ");
+    public bool QuitApplication()
+    {
+        Console.Clear();
+        Console.WriteLine("------------ QUIT APPLICATION ----------");
+        Console.WriteLine("Do you wish to quit the application?");
+        Console.Write("Press Y/N: ");
 
-    //        var answer = Console.ReadLine()!;
+        var answer = Console.ReadLine()!;
 
-    //        if (answer.ToLower() == "y")
-    //        {
-    //            return true;
-    //        }
-    //        return false;
-    //    }
+        if (answer.ToLower() == "y")
+        {
+            return true;
+        }
+        return false;
+    }
 }

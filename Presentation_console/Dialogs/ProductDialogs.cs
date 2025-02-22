@@ -154,7 +154,7 @@ public class ProductDialogs(IProductService productService) : IProductDialogs
             return;
         }
 
-        Console.WriteLine("Enter new StatusType name: ");
+        Console.Write("Enter new StatusType name: ");
         var newServiceName = Console.ReadLine();
         if (string.IsNullOrEmpty(newServiceName))
         {
@@ -192,7 +192,7 @@ public class ProductDialogs(IProductService productService) : IProductDialogs
         Console.Clear();
         Console.WriteLine("----------- DELETE Service BY ID ----------");
 
-        Console.WriteLine("Enter Service ID: ");
+        Console.Write("Enter Service ID: ");
 
         var id = int.Parse(Console.ReadLine()!);
 

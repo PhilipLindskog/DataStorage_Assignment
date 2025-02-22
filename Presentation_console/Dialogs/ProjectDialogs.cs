@@ -86,7 +86,7 @@ public class ProjectDialogs(IProjectService projectService, ICustomerService cus
         Console.Write("Enter Project start date (yyyy-MM-dd): ");
         project.StartDate = DateTime.ParseExact(Console.ReadLine()!, "yyyy-MM-dd", null);
 
-        Console.WriteLine("Enter Project end date (yyyy-MM-dd): ");
+        Console.Write("Enter Project end date (yyyy-MM-dd): ");
         project.EndDate = DateTime.ParseExact(Console.ReadLine()!, "yyyy-MM-dd", null);
 
         Console.Write("Enter customer ID: ");
@@ -134,7 +134,7 @@ public class ProjectDialogs(IProjectService projectService, ICustomerService cus
                 Console.WriteLine($"Start date: {project.StartDate} End date: {project.EndDate}");
                 Console.WriteLine($"Customer: {customerName}");
                 Console.WriteLine($"Service: {productName} Price: {productPrice}");
-                Console.WriteLine($"Assigned User: {userName} Email: {userEmail}");
+                Console.WriteLine($"Assigned User: {userName} E-mail: {userEmail}");
                 Console.WriteLine($"Project status: {statusName}");
                 Console.WriteLine("-------------------------------------------");
             }
@@ -229,7 +229,7 @@ public class ProjectDialogs(IProjectService projectService, ICustomerService cus
         Console.Write("Enter Project start date (yyyy-MM-dd): ");
         var newProjectStartDate = DateTime.ParseExact(Console.ReadLine()!, "yyyy-MM-dd", null);
 
-        Console.WriteLine("Enter Project end date (yyyy-MM-dd): ");
+        Console.Write("Enter Project end date (yyyy-MM-dd): ");
         var newProjectEndDate = DateTime.ParseExact(Console.ReadLine()!, "yyyy-MM-dd", null);
 
         Console.Write("Enter customer ID: ");
@@ -277,7 +277,7 @@ public class ProjectDialogs(IProjectService projectService, ICustomerService cus
         Console.Clear();
         Console.WriteLine("----------- DELETE PROJECT BY ID ----------");
 
-        Console.WriteLine("Enter Project ID: ");
+        Console.Write("Enter Project ID: ");
 
         var id = int.Parse(Console.ReadLine()!);
 

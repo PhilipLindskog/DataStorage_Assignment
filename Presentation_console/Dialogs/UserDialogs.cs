@@ -167,7 +167,7 @@ public class UserDialogs(IUserService userService) : IUserDialogs
             return;
         }
 
-        Console.WriteLine("Enter new first name: ");
+        Console.Write("Enter new first name: ");
         var newFirstName = Console.ReadLine();
         if (string.IsNullOrEmpty(newFirstName))
         {
@@ -175,7 +175,7 @@ public class UserDialogs(IUserService userService) : IUserDialogs
             return;
         }
 
-        Console.WriteLine("Enter new last name: ");
+        Console.Write("Enter new last name: ");
         var newLasttName = Console.ReadLine();
         if (string.IsNullOrEmpty(newLasttName))
         {
@@ -183,7 +183,7 @@ public class UserDialogs(IUserService userService) : IUserDialogs
             return;
         }
 
-        Console.WriteLine("Enter new E-mail: ");
+        Console.Write("Enter new E-mail: ");
         var newEmail = Console.ReadLine();
         if (string.IsNullOrEmpty(newEmail))
         {
@@ -219,7 +219,7 @@ public class UserDialogs(IUserService userService) : IUserDialogs
         Console.Clear();
         Console.WriteLine("----------- DELETE USER BY ID ----------");
 
-        Console.WriteLine("Enter User ID: ");
+        Console.Write("Enter User ID: ");
 
         var id = int.Parse(Console.ReadLine()!);
 

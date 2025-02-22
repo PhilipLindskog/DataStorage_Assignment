@@ -153,7 +153,7 @@ public class StatusDialog(IStatusTypeService statusTypeService) : IStatusDialog
             return;
         }
 
-        Console.WriteLine("Enter new StatusType name: ");
+        Console.Write("Enter new StatusType name: ");
         var newStatusName = Console.ReadLine();
 
         if (string.IsNullOrEmpty(newStatusName))
@@ -188,7 +188,7 @@ public class StatusDialog(IStatusTypeService statusTypeService) : IStatusDialog
         Console.Clear();
         Console.WriteLine("----------- DELETE STATUSTYPE BY ID ----------");
 
-        Console.WriteLine("Enter StatusType ID: ");
+        Console.Write("Enter StatusType ID: ");
 
         var id = int.Parse(Console.ReadLine()!);
 
